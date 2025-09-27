@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  localstack:
+    image: localstack/localstack
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+    networks:
+      - filewatch-net
+
+  sftp:
+    image: atmoz/sftp
+    container_name: sftp
+    ports:
+      - "2222:22"
+    volumes:
+      - ./data:/home/sftpuser/data
+    networks:
+      - filewatch-net
+    command: sftpuser:password:::data
+
+  watcher:
+    build:
+      context: ./watcher
+      dockerfile: Dockerfile
+    container_name: watcher
+    volumes:
+      - ./data:/app/data
+    networks:
+      - filewatch-net
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ENDPOINT_URL=http://localstack:4566
+
+networks:
+  filewatch-net:
+    driver: bridge
