@@ -1,0 +1,46 @@
+{
+  "file_watcher": {
+    "watch_directories": [
+      "./watched_files",
+      "./incoming"
+    ],
+    "watched_extensions": [
+      ".txt",
+      ".pdf",
+      ".jpg",
+      ".png",
+      ".doc",
+      ".docx"
+    ]
+  },
+  "s3": {
+    "bucket_name": "my-file-bucket",
+    "aws_access_key_id": "YOUR_AWS_ACCESS_KEY_ID",
+    "aws_secret_access_key": "YOUR_AWS_SECRET_ACCESS_KEY",
+    "aws_session_token": "",
+    "region_name": "us-east-1",
+    "endpoint_url": "",
+    "key_prefix": "uploads",
+    "multipart_threshold": 104857600,
+    "multipart_chunksize": 10485760,
+    "max_concurrency": 10
+  },
+  "sftp": {
+    "servers": [
+      {
+        "hostname": "sftp.example.com",
+        "port": 22,
+        "username": "your_username",
+        "password": "your_password",
+        "private_key_path": "",
+        "timeout": 30
+      }
+    ],
+    "remote_directory": "/uploads",
+    "max_concurrent_transfers": 5
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  }
+}
